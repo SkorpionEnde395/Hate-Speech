@@ -1,5 +1,5 @@
 import pandas as pd
-
+import re
 import nltk
 nltk.data.path.append("C:\\Users\\sonny\\nltk_data")
 from nltk.corpus import stopwords
@@ -57,8 +57,8 @@ def datenvorverarbeitung(text):
     print(lemmatized_tokens)
 
     #wenn Tweet URL True
-    #dann
-    #URL_zerlegen()
+    if ist_eine_URL(lemmatized_tokens)==True:
+        URL_zerlegen()
     #sonst keine weitere verarbeitung 
 
     #Stopwörter entfernten 
@@ -70,6 +70,12 @@ def datenvorverarbeitung(text):
 
 def URL_zerlegen():
     print("TEst")
+
+def ist_eine_URL(moeglicheURL):
+    #regulärer ausdruck für eine URL 
+    url_aufbau=re.compile("^((http|https)://)[-a-zA-Z0-9@:%._\\+~#?&//=]{2,256}\\.[a-z]{2,6}\\b([-a-zA-Z0-9@:%._\\+~#?&//=]*)$")
+    #abfrage ob regulaerer ausdruck der URL mit der moeglichen URL übereinstimmt --> T/F
+    return bool(url_aufbau.match(moeglicheURL))
 
 def lemmatize_text(text):
     # Den Text mit SpaCy verarbeiten
